@@ -2,24 +2,24 @@ package hexlet.code.schemas;
 
 import java.util.function.Function;
 
-public class NumberBaseSchema extends BaseSchema<Integer> {
-    public NumberBaseSchema required() {
+public class NumberSchema extends BaseSchema<Integer> {
+    public NumberSchema required() {
         Function<Integer, Boolean> fn = (v) -> v != null;
-        this.rules.add(fn);
+        this.addRule("required", fn);
 
         return this;
     }
 
-    public NumberBaseSchema positive() {
+    public NumberSchema positive() {
         Function<Integer, Boolean> fn = (v) -> v > 0;
-        this.rules.add(fn);
+        this.addRule("positive", fn);
 
         return this;
     }
 
-    public NumberBaseSchema range(Integer min, Integer max) {
+    public NumberSchema range(Integer min, Integer max) {
         Function<Integer, Boolean> fn = (v) -> v >= min && v <= max;
-        this.rules.add(fn);
+        this.addRule("range", fn);
 
         return this;
     }
