@@ -1,8 +1,14 @@
 plugins {
-    id("java")
+    id("checkstyle")
+    application
+    jacoco
 }
 
-group = "org.example"
+application {
+    mainClass = "hexlet.code.App"
+}
+
+group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -12,8 +18,11 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.assertj:assertj-core:3.24.2")
 }
 
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.jacocoTestReport { reports { xml.required.set(true) } }
