@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class MapSchema extends BaseSchema<Map<?, ?>> {
+public final class MapSchema extends BaseSchema<Map<?, ?>> {
     public MapSchema required() {
         Function<Map<?, ?>, Boolean> fn = Objects::nonNull;
         this.addRule("required", fn);

@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class NumberSchema extends BaseSchema<Integer> {
+public final class NumberSchema extends BaseSchema<Integer> {
     public NumberSchema required() {
         Function<Integer, Boolean> fn = Objects::nonNull;
         this.addRule("required", fn);
