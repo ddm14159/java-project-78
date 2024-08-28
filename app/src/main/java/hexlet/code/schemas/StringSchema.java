@@ -12,7 +12,7 @@ public class StringSchema extends BaseSchema<String> {
     }
 
     public StringSchema minLength(Integer length) {
-        Function<String, Boolean> fn = (v) -> v.length() >= length;
+        Function<String, Boolean> fn = (v) -> Objects.isNull(v) || v.length() >= length;
         this.addRule("minlength", fn);
 
         return this;

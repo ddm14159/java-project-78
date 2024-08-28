@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.schemas.BaseSchema;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class AppTest {
         var v = new Validator();
         var scheme = v.string();
 
+        assertThat(scheme.minLength(3).isValid(null)).isTrue();
         assertThat(scheme.minLength(3).isValid("test")).isTrue();
         assertThat(scheme.minLength(5).isValid("test")).isFalse();
     }
@@ -85,5 +87,31 @@ public class AppTest {
         assertThat(scheme.sizeof(0).isValid(new HashMap<>())).isTrue();
         assertThat(scheme.sizeof(2).isValid(Map.of(1, 2, 3, 4))).isTrue();
         assertThat(scheme.sizeof(3).isValid(Map.of(1, 2, 3, 4))).isFalse();
+    }
+
+    @Test
+    public void testCheckMapShape() {
+        var v = new Validator();
+        var schema = v.map();
+        Map<String, BaseSchema<String>> schemas1 = new HashMap<>();
+        schemas1.put("firstName", v.string().required());
+        schemas1.put("lastName", v.string().required().minLength(2));
+        schema.shape(schemas1);
+
+        Map<String, String> human1 = new HashMap<>();
+        human1.put("firstName", "John");
+        human1.put("lastName", "Smith");
+
+        assertThat(schema.isValid(human1)).isTrue();
+
+        Map<String, String> human2 = new HashMap<>();
+        human2.put("firstName", "John");
+        human2.put("lastName", null);
+        assertThat(schema.isValid(human2)).isFalse();
+
+        Map<String, String> human3 = new HashMap<>();
+        human3.put("firstName", "Anna");
+        human3.put("lastName", "B");
+        assertThat(schema.isValid(human3)).isFalse();
     }
 }

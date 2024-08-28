@@ -1,10 +1,11 @@
 package hexlet.code.schemas;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public class NumberSchema extends BaseSchema<Integer> {
     public NumberSchema required() {
-        Function<Integer, Boolean> fn = (v) -> v != null;
+        Function<Integer, Boolean> fn = Objects::nonNull;
         this.addRule("required", fn);
 
         return this;
